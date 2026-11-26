@@ -1,0 +1,9 @@
+# Python 3.11. Install torch/torchaudio together; Demucs uses the pre-2.9 audio APIs.
+torch==2.5.1
+torchaudio==2.5.1
+demucs==4.0.1
+basic-pitch[onnx]==0.4.0
+numpy>=1.24,<2
+librosa>=0.10.2,<0.12
+soundfile>=0.12,<0.14
+faster-whisper>=1.2,<2

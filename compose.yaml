@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    image: riffsync:local
+    ports: ["8000:8000"]
+    environment:
+      RIFFSYNC_DATA: /data
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8000}
+    volumes: ["riffsync-data:/data"]
+    restart: unless-stopped
+  worker:
+    image: riffsync:local
+    build: .
+    command: ["python", "-m", "riffsync.worker"]
+    environment:
+      RIFFSYNC_DATA: /data
+      RIFFSYNC_DEVICE: cpu
+      RETENTION_DAYS: ${RETENTION_DAYS:-7}
+    volumes:
+      ["riffsync-data:/data", "riffsync-models:/home/riffsync/.cache/torch"]
+    restart: unless-stopped
+volumes:
+  riffsync-data:
+  riffsync-models:
